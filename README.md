@@ -402,6 +402,53 @@ docker volume prune
 
 ## Advanced Usage
 
+### Ingesting Jobs via REST API
+
+The backend provides a REST API endpoint to ingest jobs from CSV files. This endpoint processes the CSV and imports jobs into both Elasticsearch and Neo4j databases.
+
+**Endpoint**: `POST /api/v1/csv/ingest-csv`
+
+**Parameters**:
+- `file`: CSV file to upload (required)
+- `index_to_elasticsearch`: Index jobs to Elasticsearch (default: true)
+- `create_neo4j_nodes`: Create Neo4j nodes (default: true)
+- `process_with_nlp`: Process jobs with NLP (default: true)
+- `batch_size`: Number of jobs to process per batch (default: 100)
+
+**Example using curl:**
+
+```bash
+# Basic ingestion with default parameters
+curl -X POST "http://localhost:8000/api/v1/csv/ingest-csv" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@jobs/SDE-Nov21.csv"
+
+# Advanced ingestion with custom parameters
+curl -X POST "http://localhost:8000/api/v1/csv/ingest-csv" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@jobs/SDE-Nov21.csv" \
+  -F "index_to_elasticsearch=true" \
+  -F "create_neo4j_nodes=true" \
+  -F "process_with_nlp=true" \
+  -F "batch_size=50"
+```
+
+**Response**:
+The API will return a JSON response with ingestion statistics:
+```json
+{
+  "status": "success",
+  "jobs_processed": 1234,
+  "elasticsearch_indexed": 1234,
+  "neo4j_nodes_created": 1234,
+  "processing_time": "45.2s"
+}
+```
+
+**Note**: The ingestion process may take several minutes depending on the CSV size and whether NLP processing is enabled. For large CSV files (10,000+ jobs), consider using a smaller batch size (e.g., 50) to avoid memory issues.
+
 ### Custom Data
 
 To load your own job data:
