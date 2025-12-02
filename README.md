@@ -1,4 +1,4 @@
-# JobMatch AI - Demo Package
+# JobMatch AI - Installation Package
 
 A complete AI-powered job matching system featuring semantic search, knowledge graphs, and intelligent job recommendations.
 
