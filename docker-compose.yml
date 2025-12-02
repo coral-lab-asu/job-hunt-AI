@@ -46,7 +46,7 @@ services:
 
   backend:
     # Using pre-built image from Docker Hub
-    image: mvyas7/job-hunt-ai-backend:v1.0.0
+    image: mvyas7/job-hunt-ai-backend:v1.2.0
     container_name: jobmatch_backend
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
@@ -76,7 +76,7 @@ services:
 
   frontend:
     # Using pre-built image from Docker Hub
-    image: mvyas7/job-hunt-ai-frontend:latest
+    image: mvyas7/job-hunt-ai-frontend:v1.3.1
     container_name: jobmatch_frontend
     entrypoint: ["/bin/sh", "-c"]
     command: ["npm start"]
